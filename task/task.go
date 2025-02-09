@@ -124,7 +124,7 @@ func (task *Task) monitorHandler() {
 }
 
 func (task *Task) rescanBlocksHandler() {
-	ticker := time.NewTicker(time.Second * 5)
+	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 
 	for {
