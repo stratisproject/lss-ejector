@@ -256,7 +256,7 @@ This Stratis Launcher streamlines the process of uploading your validator keys a
 
 1.  **Deposit mSTRAX Tokens:**
     
-    -   Visit the Masternode dApp.
+    -   Visit the [Masternode dApp](https://beta.masternode.stratisevm.com).
     -   Deposit your **mSTRAX** tokens as collateral to register on the Masternode Protocol.
 2.  **Earn Dual Rewards:**
     
