@@ -42,7 +42,7 @@ redirect_stderr=true
 stdout_logfile=/var/log/supervisor-lss-ejector.log
 stdout_logfile_maxbytes=500MB
 stdout_logfile_backups=10
-autostart=false
+autostart=true
 startretries=10
 stopwaitsecs=60
 ```
