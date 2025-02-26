@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	appName                    = "eth-lsd-ejector"
+	appName                    = "lss-ejector"
 	defaultFormatterConsoleUse = &logrus.TextFormatter{FullTimestamp: true}
 )
 
@@ -22,7 +22,7 @@ func NewRootCmd() *cobra.Command {
 	// RootCmd represents the base command when called without any subcommands
 	var rootCmd = &cobra.Command{
 		Use:   appName,
-		Short: "eth lsd ejector",
+		Short: "lss ejector",
 	}
 
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, _ []string) error {
