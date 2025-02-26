@@ -228,7 +228,12 @@ git clone https://github.com/stratisproject/lss-ejector
     supervisorctl update
     ```
     
-
+4. **Check supervisor daemon log file** to get the logs:
+    
+    ```bash
+    tail -f /var/log/supervisor-lss-ejector.log
+    ```
+    
 ### B. Set Up Your Validator Host via Stratis Launcher
 
 To set up your validator host, use the latest release from the [stratis-node repository](https://github.com/stratisproject/stratis-node). 
