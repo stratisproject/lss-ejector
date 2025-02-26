@@ -208,7 +208,7 @@ git clone https://github.com/stratisproject/lss-ejector
       --execution_endpoint=http://localhost:8545 \
       --consensus_endpoint=http://localhost:3500 \
       --keys_dir=/root/staking-deposit-cli/validator_keys \
-      --withdraw_address=0x00A6A303B2085857f04d700DF780dcEe72fc7048
+      --staking_address=0x00A6A303B2085857f04d700DF780dcEe72fc7048
     environment=KEYSTORE_PASSWORD=<keystore_password>
     redirect_stderr=true
     stdout_logfile=/var/log/supervisor-lss-ejector.log
