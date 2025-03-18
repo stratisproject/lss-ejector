@@ -160,7 +160,7 @@ git clone https://github.com/stratisproject/lss-ejector
     For the **beta network**, run:
     
     ```bash
-    ./deposit.sh new-mnemonic --execution_address 0x00A6A303B2085857f04d700DF780dcEe72fc7048
+    ./deposit.sh new-mnemonic --execution_address 0x0504D06711d02E6275e1724529a801441088f9f4
     ```
     
     > **Note:** This execution address is specific to the beta network. For Mainnet, as the protocol is not deployed, there is no defined execution address.
@@ -168,11 +168,11 @@ git clone https://github.com/stratisproject/lss-ejector
 3.  You will be prompted to provide the following inputs:
     
     -   **Number of Validators:**
-        -   **Auroria:** The collateral requirement is 100,000 STRAX. Define **5 validators** (5 x 20,000 STRAX).
+        -   **Auroria:** The collateral requirement is 1,000,000 STRAX. Define **50 validators** (50 x 20,000 STRAX).
         -   **Mainnet:** The collateral requirement is 1,000,000 STRAX. Define **50 validators** (50 x 20,000 STRAX).
     -   **Withdrawal Recipient Address:**
         -   For the **beta network**, **set this value to:**  
-            `0x00A6A303B2085857f04d700DF780dcEe72fc7048`
+            `0x0504D06711d02E6275e1724529a801441088f9f4`
         -   **Important:** Do not change this value or use a personal address. For Mainnet, as the protocol is not deployed, there is no address to use. Failure to set this address correctly will result in activation failure.
     -   **Network/Chain Name:**
         -   Enter the correct network name (e.g., `auroria` for Auroria, `stratis` for Mainnet).
