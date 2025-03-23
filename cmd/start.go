@@ -21,11 +21,13 @@ import (
 const EnvPassword = "KEYSTORE_PASSWORD"
 
 const (
-	flagKeysDir           = "keys_dir"
-	flagExecutionEndpoint = "execution_endpoint"
-	flagConsensusEndpoint = "consensus_endpoint"
-	flagLogLevel          = "log_level"
-	flagStakingAddress    = "staking_address"
+	flagAllAccountsFile      = "all_accounts_file"
+	flagKeysDir              = "keys_dir"
+	flagKeystorePasswordFile = "keystore_password_file"
+	flagExecutionEndpoint    = "execution_endpoint"
+	flagConsensusEndpoint    = "consensus_endpoint"
+	flagLogLevel             = "log_level"
+	flagStakingAddress       = "staking_address"
 )
 
 // Keystore json file representation as a Go struct.
@@ -71,7 +73,7 @@ func startCmd() *cobra.Command {
 				return err
 			}
 			if !common.IsHexAddress(stakingAddress) {
-				return fmt.Errorf("parse staking address failed, address :%d", stakingAddress)
+				return fmt.Errorf("parse staking address failed, address: %s", stakingAddress)
 			}
 			logLevelStr, err := cmd.Flags().GetString(flagLogLevel)
 			if err != nil {
@@ -89,16 +91,19 @@ func startCmd() *cobra.Command {
 			// interrupt signal
 			ctx := ShutdownListener()
 
-			keystores, err := parseKeysDir(keysDir)
+			keystorePasswordFile, err := cmd.Flags().GetString(flagKeystorePasswordFile)
 			if err != nil {
-				return errors.Wrap(err, "parseKeysDir failed")
-			}
-			if len(keystores) == 0 {
-				return fmt.Errorf("no keystore found in directory %s", keysDir)
+				return err
 			}
 
 			var accountsPassword string
-			if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
+			if keystorePasswordFile != "" {
+				pass, err := os.ReadFile(keystorePasswordFile)
+				if err != nil {
+					return errors.Wrap(err, "read keystorePasswordFile failed")
+				}
+				accountsPassword = string(pass)
+			} else if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 				accountsPassword = pswdStr
 			} else {
 				accountsPassword, err = prompt.PasswordPrompt(
@@ -106,6 +111,80 @@ func startCmd() *cobra.Command {
 				)
 				if err != nil {
 					return fmt.Errorf("could not read account password: %w", err)
+				}
+			}
+
+			allAccountsFile, err := cmd.Flags().GetBool(flagAllAccountsFile)
+			if err != nil {
+				return err
+			}
+
+			keys := make(map[string]string)
+			validators := make(map[string]*task.Validator)
+			notExitValidators := make(map[string]*task.Validator, 0)
+			checkPubkeys := make([]types.ValidatorPubkey, 0)
+
+			if allAccountsFile {
+				keystore, err := parseAllAccountsKeystoreFile(keysDir)
+				if err != nil {
+					return errors.Wrap(err, "parseAllAccountsKeystoreFile failed")
+				}
+
+				privKeysBytes, pubKeysBytes, _, err := attemptDecryptAllAccountsKeystore(keystore, accountsPassword)
+				if err != nil {
+					return err
+				}
+
+				for idx, privKeyBytes := range privKeysBytes {
+					pubKeyBytes := pubKeysBytes[idx]
+
+					pubkey := types.BytesToValidatorPubkey(pubKeyBytes)
+
+					// if key exists prior to being added then output log that duplicate key was found
+					if _, ok := keys[pubkey.String()]; ok {
+						logrus.Warnf("Duplicate key in import will be ignored: %#x", pubKeyBytes)
+						continue
+					}
+					keys[pubkey.String()] = pubkey.String()
+					checkPubkeys = append(checkPubkeys, pubkey)
+
+					validator := task.Validator{
+						PrivateKey: privKeyBytes,
+						Publickey:  pubKeyBytes,
+					}
+					validators[pubkey.String()] = &validator
+					logrus.Debug("pubkeyHexString: ", pubkey.String())
+				}
+			} else {
+				keystores, err := parseKeysDir(keysDir)
+				if err != nil {
+					return errors.Wrap(err, "parseKeysDir failed")
+				}
+				if len(keystores) == 0 {
+					return fmt.Errorf("no keystore found in directory %s", keysDir)
+				}
+
+				for _, keystore := range keystores {
+					privKeyBytes, pubKeyBytes, _, err := attemptDecryptKeystore(keystore, accountsPassword)
+					if err != nil {
+						return err
+					}
+					pubkey := types.BytesToValidatorPubkey(pubKeyBytes)
+
+					// if key exists prior to being added then output log that duplicate key was found
+					if _, ok := keys[pubkey.String()]; ok {
+						logrus.Warnf("Duplicate key in import will be ignored: %#x", pubKeyBytes)
+						continue
+					}
+					keys[pubkey.String()] = pubkey.String()
+					checkPubkeys = append(checkPubkeys, pubkey)
+
+					validator := task.Validator{
+						PrivateKey: privKeyBytes,
+						Publickey:  pubKeyBytes,
+					}
+					validators[pubkey.String()] = &validator
+					logrus.Debug("pubkeyHexString: ", pubkey.String())
 				}
 			}
 
@@ -132,33 +211,6 @@ func startCmd() *cobra.Command {
 				if beaconHead.FinalizedEpoch == 0 {
 					return fmt.Errorf("check consensusEndpoint: %s , request failed: finalized epoch is zero", consensusEndpoint)
 				}
-			}
-
-			keys := make(map[string]string)
-			validators := make(map[string]*task.Validator)
-			notExitValidators := make(map[string]*task.Validator, 0)
-			checkPubkeys := make([]types.ValidatorPubkey, 0)
-			for _, keystore := range keystores {
-				privKeyBytes, pubKeyBytes, _, err := attemptDecryptKeystore(keystore, accountsPassword)
-				if err != nil {
-					return err
-				}
-				pubkey := types.BytesToValidatorPubkey(pubKeyBytes)
-
-				// if key exists prior to being added then output log that duplicate key was found
-				if _, ok := keys[pubkey.String()]; ok {
-					logrus.Warnf("Duplicate key in import will be ignored: %#x", pubKeyBytes)
-					continue
-				}
-				keys[pubkey.String()] = pubkey.String()
-				checkPubkeys = append(checkPubkeys, pubkey)
-
-				validator := task.Validator{
-					PrivateKey: privKeyBytes,
-					Publickey:  pubKeyBytes,
-				}
-				validators[pubkey.String()] = &validator
-				logrus.Debug("pubkeyHexString: ", pubkey.String())
 			}
 
 			beaconHead, err := connection.Eth2Client().GetBeaconHead()
@@ -205,10 +257,12 @@ func startCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().String(flagKeysDir, "", "Path to a directory where keystores to be imported are stored (must provide)")
+	cmd.Flags().Bool(flagAllAccountsFile, false, "Whether keys_dir option is a path to all-accounts.keystore.json file")
+	cmd.Flags().String(flagKeysDir, "", "Path to a directory where keystores to be imported are stored or a single prysm all-accounts.keystore.json file path (must provide)")
 	cmd.Flags().String(flagExecutionEndpoint, "", "Execution node RPC provider endpoint (must provide)")
 	cmd.Flags().String(flagConsensusEndpoint, "", "Consensus node RPC provider endpoint (must provide)")
 	cmd.Flags().String(flagStakingAddress, "", "Network staking address")
+	cmd.Flags().String(flagKeystorePasswordFile, "", "Path to a plain-text, .txt file containing a password for a keystore files")
 	cmd.Flags().String(flagLogLevel, logrus.InfoLevel.String(), "The logging level (trace|debug|info|warn|error|fatal|panic)")
 	return cmd
 }

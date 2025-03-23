@@ -48,7 +48,7 @@ func parseKeysDir(keysDir string) ([]*Keystore, error) {
 		// specify this value in their filename.
 		sort.Sort(byDerivationPath(filesInDir))
 		for _, name := range filesInDir {
-			keystore, err := readKeystoreFile(filepath.Join(keysDir, name))
+			keystore, err := readKeystoreFile(filepath.Join(keysDir, name), false)
 			if err != nil && strings.Contains(err.Error(), "could not decode keystore json") {
 				continue
 			} else if err != nil {
@@ -57,7 +57,7 @@ func parseKeysDir(keysDir string) ([]*Keystore, error) {
 			keystoresImported = append(keystoresImported, keystore)
 		}
 	} else {
-		keystore, err := readKeystoreFile(keysDir)
+		keystore, err := readKeystoreFile(keysDir, false)
 		if err != nil {
 			return nil, errors.Wrap(err, "could not import keystore")
 		}
@@ -65,6 +65,19 @@ func parseKeysDir(keysDir string) ([]*Keystore, error) {
 	}
 
 	return keystoresImported, nil
+}
+
+func parseAllAccountsKeystoreFile(filePath string) (*Keystore, error) {
+	isDir, err := file.HasDir(filePath)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not determine if path is a directory")
+	}
+
+	if isDir {
+		return nil, fmt.Errorf("provided all accounts file path is a directory")
+	}
+
+	return readKeystoreFile(filePath, true)
 }
 
 var derivationPathRegex = regexp.MustCompile(`m_12381_3600_(\d+)_(\d+)_(\d+)`)
@@ -110,7 +123,7 @@ func (fileNames byDerivationPath) Swap(i, j int) {
 	fileNames[i], fileNames[j] = fileNames[j], fileNames[i]
 }
 
-func readKeystoreFile(keystoreFilePath string) (*Keystore, error) {
+func readKeystoreFile(keystoreFilePath string, isAllAccountsFile bool) (*Keystore, error) {
 	keystoreBytes, err := os.ReadFile(keystoreFilePath) // #nosec G304
 	if err != nil {
 		return nil, errors.Wrap(err, "could not read keystore file")
@@ -119,7 +132,7 @@ func readKeystoreFile(keystoreFilePath string) (*Keystore, error) {
 	if err := json.Unmarshal(keystoreBytes, keystoreFile); err != nil {
 		return nil, errors.Wrap(err, "could not decode keystore json")
 	}
-	if keystoreFile.Pubkey == "" {
+	if !isAllAccountsFile && keystoreFile.Pubkey == "" {
 		return nil, errors.New("could not decode keystore json")
 	}
 	return keystoreFile, nil
@@ -171,4 +184,29 @@ func attemptDecryptKeystore(keystore *Keystore, password string,
 		pubKeyBytes = privKey.PublicKey().Marshal()
 	}
 	return privKeyBytes, pubKeyBytes, password, nil
+}
+
+func attemptDecryptAllAccountsKeystore(keystore *Keystore, password string) ([][]byte, [][]byte, string, error) {
+	enc := keystorev4.New()
+	// Attempt to decrypt the keystore with the specifies password.
+	contentBytes, err := enc.Decrypt(keystore.Crypto, password)
+	doesNotDecrypt := err != nil && strings.Contains(err.Error(), IncorrectPasswordErrMsg)
+	if doesNotDecrypt {
+		return nil, nil, "", fmt.Errorf(
+			"incorrect password for key 0x%s",
+			keystore.Pubkey,
+		)
+	}
+	if err != nil && !strings.Contains(err.Error(), IncorrectPasswordErrMsg) {
+		return nil, nil, "", errors.Wrap(err, "could not decrypt keystore")
+	}
+	var content struct {
+		PrivateKeys [][]byte `json:"private_keys"`
+		PublicKeys  [][]byte `json:"public_keys"`
+	}
+	if err := json.Unmarshal(contentBytes, &content); err != nil {
+		return nil, nil, "", errors.Wrap(err, "could not unmarshal all-accounts.keystore file content")
+	}
+
+	return content.PrivateKeys, content.PublicKeys, password, nil
 }
