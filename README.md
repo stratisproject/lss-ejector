@@ -208,7 +208,7 @@ git clone https://github.com/stratisproject/lss-ejector
       --execution_endpoint=http://localhost:8545 \
       --consensus_endpoint=http://localhost:3500 \
       --keys_dir=/root/staking-deposit-cli/validator_keys \
-      --staking_address=0x00A6A303B2085857f04d700DF780dcEe72fc7048
+      --staking_address=0x0504D06711d02E6275e1724529a801441088f9f4
     environment=KEYSTORE_PASSWORD=<keystore_password>
     redirect_stderr=true
     stdout_logfile=/var/log/supervisor-lss-ejector.log
@@ -219,7 +219,7 @@ git clone https://github.com/stratisproject/lss-ejector
     stopwaitsecs=60
     ```
     **Important:**
-    Be sure to set your password value here: `  environment=KEYSTORE_PASSWORD=<keystore_password>`
+    Be sure to set your password value here: `environment=KEYSTORE_PASSWORD=<keystore_password>`
     
 3.  **Reload Supervisor** to apply the new configuration:
     
