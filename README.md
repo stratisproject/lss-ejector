@@ -38,7 +38,7 @@ These components work together to create a robust and secure environment for Mas
 
 -   **SSH Access:** Ensure you have SSH access to your host.
 -   **Basic Linux Knowledge:** Familiarity with terminal commands is recommended.
--   **STRAX Tokens:** You will need 1,000,000 STRAX for Mainnet staking (or 100,000 tSTRAX for testing via the [Stratis EVM Faucet](https://faucet.stratisevm.com/)).
+-   **STRAX Tokens:** You will need 1,000,000 STRAX for Mainnet staking (or 1,000,000 tSTRAX for testing via the [Stratis EVM Faucet](https://faucet.stratisevm.com/)).
 
 ----------
 
