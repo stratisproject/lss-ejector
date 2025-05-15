@@ -157,13 +157,19 @@ git clone https://github.com/stratisproject/lss-ejector
     ```
     
 2.  **Run the key generation script with the execution address parameter:**  
+
+    For the **mainnet network**, run:
+    
+    ```bash
+    ./deposit.sh new-mnemonic --execution_address 0x16CFc478175C222a1eC558baAE290593f175514F
+    ```  
+
     For the **beta network**, run:
     
     ```bash
     ./deposit.sh new-mnemonic --execution_address 0x0504D06711d02E6275e1724529a801441088f9f4
     ```
     
-    > **Note:** This execution address is specific to the beta network. For Mainnet, as the protocol is not deployed, there is no defined execution address.
     
 3.  You will be prompted to provide the following inputs:
     
@@ -171,6 +177,8 @@ git clone https://github.com/stratisproject/lss-ejector
         -   **Auroria:** The collateral requirement is 1,000,000 STRAX. Define **50 validators** (50 x 20,000 STRAX).
         -   **Mainnet:** The collateral requirement is 1,000,000 STRAX. Define **50 validators** (50 x 20,000 STRAX).
     -   **Withdrawal Recipient Address:**
+        -   For the **mainnet network**, **set this value to:**  
+            `0x16CFc478175C222a1eC558baAE290593f175514F`
         -   For the **beta network**, **set this value to:**  
             `0x0504D06711d02E6275e1724529a801441088f9f4`
         -   **Important:** Do not change this value or use a personal address. For Mainnet, as the protocol is not deployed, there is no address to use. Failure to set this address correctly will result in activation failure.
@@ -201,7 +209,25 @@ git clone https://github.com/stratisproject/lss-ejector
     ```
     
 2.  **Paste the following configuration snippet (replace `<keystore_password>` with your password):**
+    For the **mainnet network**:
+    ```ini
+    [program:lss-ejector]
+    command=lss-ejector start \
+      --execution_endpoint=http://localhost:8545 \
+      --consensus_endpoint=http://localhost:3500 \
+      --keys_dir=/root/staking-deposit-cli/validator_keys \
+      --staking_address=0x16CFc478175C222a1eC558baAE290593f175514F
+    environment=KEYSTORE_PASSWORD=<keystore_password>
+    redirect_stderr=true
+    stdout_logfile=/var/log/supervisor-lss-ejector.log
+    stdout_logfile_maxbytes=500MB
+    stdout_logfile_backups=10
+    autostart=true
+    startretries=10
+    stopwaitsecs=60
+    ```
     
+    For the **beta network**:
     ```ini
     [program:lss-ejector]
     command=lss-ejector start \
