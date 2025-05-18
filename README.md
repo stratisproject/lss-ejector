@@ -164,7 +164,7 @@ git clone https://github.com/stratisproject/lss-ejector
     ./deposit.sh new-mnemonic --execution_address 0x16CFc478175C222a1eC558baAE290593f175514F
     ```  
 
-    For the **beta network**, run:
+    For the **Auroria network**, run:
     
     ```bash
     ./deposit.sh new-mnemonic --execution_address 0x0504D06711d02E6275e1724529a801441088f9f4
@@ -179,7 +179,7 @@ git clone https://github.com/stratisproject/lss-ejector
     -   **Withdrawal Recipient Address:**
         -   For the **mainnet network**, **set this value to:**  
             `0x16CFc478175C222a1eC558baAE290593f175514F`
-        -   For the **beta network**, **set this value to:**  
+        -   For the **Auroria network**, **set this value to:**  
             `0x0504D06711d02E6275e1724529a801441088f9f4`
         -   **Important:** Do not change this value or use a personal address. For Mainnet, as the protocol is not deployed, there is no address to use. Failure to set this address correctly will result in activation failure.
     -   **Network/Chain Name:**
@@ -227,7 +227,7 @@ git clone https://github.com/stratisproject/lss-ejector
     stopwaitsecs=60
     ```
     
-    For the **beta network**:
+    For the **Auroria network**:
     ```ini
     [program:lss-ejector]
     command=lss-ejector start \
