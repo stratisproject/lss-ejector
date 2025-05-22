@@ -4,7 +4,7 @@ This guide will detail how to set up validators eligible for Masternode Staking.
 ## Requirements
 
  * 1,000,000 STRAX (additional STRAX is required to fuel gas fees)
- * A linux-based host which will be configured by the Stratis Launcher
+ * A Linux-based host which will be configured by the Stratis Launcher
  * A Windows or macOS device that can run the Stratis Launcher
 
 ## Important Considerations
@@ -74,7 +74,7 @@ The host will now configure itself and begin the synchronisation process
 
 ### Step 9
 
-After initial configuration is complete, you can open your configure instance by selecting **OPEN**
+After initial configuration is complete, you can open your configured instance by selecting **OPEN**
 
 ![Step Image](images/image1.png)
 
@@ -88,21 +88,21 @@ We now need to add the Ejector functionality; this is required for Masternode St
 
 ### Step 11
 
-You are now on the edit node page
+You are now on the Edit Node page
 
 ![Step Image](images/image18.png)
 
 
 ### Step 12
 
-Hover over your Setup to show the listed options. Click the below button to Add an additional Service
+Hover over your Setup to show the listed options. Click the below button to **Add** an additional service
 
 ![Step Image](images/image10.png)
 
 
 ### Step 13
 
-Click the Expand button on the right-hand side of the screen to reveal the additional configurable services
+Click the **Expand** button on the right-hand side of the screen to reveal the additional configurable services
 
 ![Step Image](images/image36.png)
 
@@ -149,7 +149,7 @@ The ejector service has now been configured
 
 ## Create new Validator Keys
 
-As part of the Masternode Staking setup, the protocol requires that the contract address is defined as the withdrawal address for your validator keys. This enables the protocol to manage the exiting and withdrawal of mSTRAX.
+As part of the Masternode Staking setup, the protocol requires that the contract address is defined as the withdrawal address for your validator keys. This enables the protocol to manage the exiting and withdrawal of STRAX when converting mSTRAX back to STRAX.
 
 ### Step 1
 
