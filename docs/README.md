@@ -1,5 +1,15 @@
 # Masternode Staking Setup Process
-This guide will detail how to set up validators eligible for Masternode Staking. Masternode Staking enables you to operate validators and receive a liquid token in return. mSTRAX. The mSTRAX Token can then be deposited in the Masternode dApp for additional return on your token holdings. This guide specifically focuses on the use of the Stratis Launcher. If you prefer to set up your Masternode Staking infrastructure manually, you can refer to the manual steps [here](https://github.com/stratisproject/lss-ejector/blob/master/docs/setup.md).
+This guide will detail how to set up validators eligible for Masternode Staking. Masternode Staking enables you to operate validators and receive a liquid token in return. mSTRAX. The mSTRAX Token can then be deposited in the Masternode dApp for additional return on your token holdings. This guide specifically focuses on the use of the Stratis Launcher. 
+
+If you prefer to set up your Masternode Staking infrastructure manually, you can refer to the manual steps [here](https://github.com/stratisproject/lss-ejector/blob/master/docs/setup.md).
+
+## High-Level Overview
+
+* **Deposit and Minting:** You deposit 1,000,000 STRAX into the protocol and receive mSTRAX, a token that represents your staked position. The mSTRAX Token is accepted as collateral for the Masternode Contract.
+* **Validator Ownership:** You are responsible for setting up and managing your own validator. 
+* **Ejector Service:** The Ejector Service securely stores your validator keys and manages your validator’s lifecycle. If you choose to exit the protocol (i.e. convert mSTRAX back to STRAX), the Ejector handles the withdrawal of your validator on your behalf.
+* **One-to-One Mapping:** Each 1M STRAX deposit is linked to a specific set of validator keys you create. You can only exit the protocol from validators you registered — not from others in the network.
+* **Claiming Rewards:** Any rewards earned through the protocol must be manually claimed via the Masternode Staking dApp.
 
 ## Requirements
 
