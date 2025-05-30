@@ -356,7 +356,7 @@ You can follow the same steps outlined above to test Masternode Staking on the *
   `0x0504D06711d02E6275e1724529a801441088f9f4`
 
 - **Collateral Token:**  
-  Use **tSTRAX** (Testnet STRAX) instead of STRAX. You can obtain test tokens via our [faucet](https://faucet.auroria.stratisevm.com) or Discord.
+  Use **tSTRAX** (Testnet STRAX) instead of STRAX. You can obtain test tokens via our [faucet](https://auroria.faucet.stratisevm.com) or Discord.
 
 - **Auroria Masternode Staking URL:**  
   Use the Auroria Masternode Staking dApp at:  
