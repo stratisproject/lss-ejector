@@ -105,21 +105,21 @@ You are now on the Edit Node page
 
 ### Step 12
 
-Hover over your Setup to show the listed options. Click the below button to **Add** an additional service
+Click on the Stratis logo within the Setup1 box to show the listed options. Click the lower right button (square with diagonal arrow) to **Add** an additional service
 
 ![Step Image](images/image10.png)
 
 
 ### Step 13
 
-Click the **Expand** button on the right-hand side of the screen to reveal the additional configurable services
+Click the **Expand** button on the right-hand edge of the screen to reveal the additional configurable services
 
 ![Step Image](images/image36.png)
 
 
 ### Step 14
 
-Select **LssEjector** from this list and press the **Create** button
+Select **LssEjector** from this list
 
 ![Step Image](images/image2.png)
 
@@ -142,7 +142,7 @@ Select all Clients displayed and press the **Confirm** button
 
 ### Step 17
 
-Click the **Install** button to configure the host
+Click the **Confirm changes** button to configure the host
 
 ![Step Image](images/image28.png)
 
