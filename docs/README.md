@@ -362,3 +362,6 @@ You can follow the same steps outlined above to test Masternode Staking on the *
   Use the Auroria Masternode Staking dApp at:  
  [https://beta.staking.masternode.stratisevm.com/stake/](https://beta.staking.masternode.stratisevm.com/stake/)
 
+- **Auroria Masternode Beta URL:**  
+  Use the Auroria Masternode dApp at:  
+ [https://beta.masternode.stratisevm.com/](https://beta.masternode.stratisevm.com/)
