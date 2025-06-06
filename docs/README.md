@@ -283,7 +283,7 @@ Now we have the validators set up, we can deposit 1,000,000 STRAX to the Mastern
 
 ### Step 1
 
-Navigate to [https://staking.masternode.stratisevm.com](https://staking.masternode.stratisevm.com) and select **Stake 1.000M STRAX**.  Confirm the transaction request in Metamask to convert your STRAX into mSTRAX.
+Navigate to [https://staking.masternode.stratisevm.com](https://staking.masternode.stratisevm.com) and select **Stake 1.000M STRAX**.  Confirm the transaction request in Metamask to convert 1,000,000 STRAX into 1,000,000 mSTRAX. 
 Tip: If you don't see your mSTRAX tokens in your wallet, click on the 'Add mSTRAX to Wallet' link and confirm in Metamask.
 
 ### Step 2
@@ -301,7 +301,7 @@ Upload your **deposit_data** JSON that was created when generating your keys
 
 ### Step 4
 
-Perform the deposit of 1,000,000 **STRAX**. In return of this transaction, you will receive 1,000,000 **mSTRAX** Tokens
+Once your **deposit_data** JSON has finished uploading, select **Deposit** to begin the deposit process
 
 ![Step Image](images/image32.png)
 
