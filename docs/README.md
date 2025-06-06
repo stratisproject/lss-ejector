@@ -283,25 +283,30 @@ Now we have the validators set up, we can deposit 1,000,000 STRAX to the Mastern
 
 ### Step 1
 
-Navigate to [https://staking.masternode.stratisevm.com](https://staking.masternode.stratisevm.com) and select **Deposit Validators**
+Navigate to [https://staking.masternode.stratisevm.com](https://staking.masternode.stratisevm.com) and select **Stake 1.000M STRAX**.  Confirm the transaction request in Metamask to convert your STRAX into mSTRAX.
+Tip: If you don't see your mSTRAX tokens in your wallet, click on the 'Add mSTRAX to Wallet' link and confirm in Metamask.
+
+### Step 2
+
+Now select **Deposit Validators**
 
 ![Step Image](images/image42.png)
 
 
-### Step 2
+### Step 3
 Upload your **deposit_data** JSON that was created when generating your keys
 
 ![Step Image](images/image7.png)
 
 
-### Step 3
+### Step 4
 
 Perform the deposit of 1,000,000 **STRAX**. In return of this transaction, you will receive 1,000,000 **mSTRAX** Tokens
 
 ![Step Image](images/image32.png)
 
 
-### Step 4
+### Step 5
 
 It can take up to 24 hours for your Validators to become active and begin receiving rewards. Once they are active, rewards can be claimed from the Masternode Staking Protocol dApp on the My Data page seen below
 
