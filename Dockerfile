@@ -1,5 +1,8 @@
 FROM golang:1.23-alpine AS builder
 
+ENV CGO_CFLAGS="-O -D__BLST_PORTABLE__" 
+ENV CGO_CFLAGS_ALLOW="-O -D__BLST_PORTABLE__"
+
 RUN apk update && apk add --no-cache make git gcc g++ musl-dev linux-headers
 
 COPY go.mod /lss-ejector/
