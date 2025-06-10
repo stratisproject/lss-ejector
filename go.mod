@@ -1,8 +1,6 @@
 module lss_ejector
 
-go 1.21.4
-
-toolchain go1.22.3
+go 1.23
 
 require (
 	github.com/SergeevDmitry/eth2-balance-service v0.0.0-20241127174627-05774b4ecbfa
