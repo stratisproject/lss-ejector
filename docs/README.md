@@ -318,9 +318,9 @@ It can take up to 24 hours for your Validators to become active and begin receiv
 
 ## Register on the Masternode Contract
 
-After the Hardfork on the **11th of June 2025**, the Masternode Contract will allow the deposit of mSTRAX as collateral. The registration process does not differ from the existing. Simply click Register to deposit your mSTRAX as collateral and become a registrant of the contract.
+After the Hardfork on the **11th of June 2025**, the Masternode Contract will allow the deposit of mSTRAX as collateral. The registration process does not differ from the existing. Simply click Register mSTRAX Token to deposit your mSTRAX as collateral and become a registrant of the contract.
 
-Simply vist https://staking.masternode.stratisevm.com and click **Register** to deposit your collateral.
+Simply vist https://masternode.stratisevm.com and click **Register mSTRAX Token** to deposit your collateral.
 
 ![Step Image](images/image40.png)
 
