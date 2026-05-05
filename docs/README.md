@@ -15,7 +15,17 @@ If you prefer to set up your Masternode Staking infrastructure manually, you can
 ## Requirements
 
 * 1,000,000 STRAX (additional STRAX is required to fuel gas fees)
-* A Linux-based host which will be configured by the Stratis Launcher
+* A Linux-based (Ubuntu) host which will be configured by the Stratis Launcher
+ - **Hardware Requirements:**
+    - **CPU**: 4+ cores @ 2.8+ GHz
+    -   **Memory**: 8GB+ RAM
+    -   **Storage**: SSD with at least 1TB free space
+    -   **Network**: 8 MBit/sec broadband
+
+-   **Network Port Requirements**
+    -   **GETH**: Allow: 30303/UDP+TCP in+out; Block: 8545/TCP all
+    -   **Prysm beacon-chain**: Allow: */TCP+UDP out, 13000/TCP in+out, 12000/UDP in+out; Block: 3500/TCP all, 8551/TCP all, 4000/TCP all
+
 * A Windows or macOS device that can run the Stratis Launcher
 
 ## Important Considerations
